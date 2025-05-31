@@ -70,6 +70,32 @@ namespace pds::hashTable
             }
 
             std::cout << "\n";
+
+            std::cout << "\nHash Table Contents:\n\n";
+            std::cout << std::left
+                      << std::setw(12) << "Hash Index" << " | "
+                      << std::setw(20) << "Key" << " | "
+                      << std::setw(20) << "Value"
+                      << "\n";
+
+            std::cout << std::string(12, '-') << "-+-"
+                      << std::string(20, '-') << "-+-"
+                      << std::string(20, '-') << "\n";
+
+            // Table rows
+            for (size_t i = 0; i < table._capacity; ++i)
+            {
+                const auto &entry = table._table->at(i);
+                if (entry.first != Key{})
+                {
+                    std::cout << std::left
+                              << std::setw(12) << i << " | "
+                              << std::setw(20) << entry.first << " | "
+                              << std::setw(20) << entry.second
+                              << "\n";
+                }
+            }
+            std::cout << "\n";
         }
 
 
