@@ -13,7 +13,13 @@ int main() {
     filter.insert("cherry");
 
     // Query inserted elements
-    filter.query("apple");    // Expected: Likely present
+    std::optional<float> result = filter.query("apple");
+    if (result)
+        std::cout << "Query result: Possibly present (FP probability ≈ " 
+                << std::fixed << std::setprecision(2) 
+                << (*result * 100) << "%)\n";
+    else
+        std::cout << "Query result: Definitely not present.\n";
     filter.query("banana");   // Expected: Likely present
     filter.query("cherry");   // Expected: Likely present
 

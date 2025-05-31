@@ -2,16 +2,33 @@
 
 namespace pds::bloomFilter
 {
+    /**
+     * @brief Construct a new Simple Bloom Filter< T>:: Simple Bloom Filter object
+     *
+     * @tparam T
+     */
     template <typename T>
     SimpleBloomFilter<T>::SimpleBloomFilter()
         : _k(0), _count(0), _bitArray(new std::bitset<BIT_ARRAY_SIZE>()) {}
 
+
+    /**
+     * @brief Destroy the Simple Bloom Filter< T>:: Simple Bloom Filter object
+     *
+     * @tparam T
+     */
     template <typename T>
     SimpleBloomFilter<T>::~SimpleBloomFilter()
     {
         delete _bitArray;
     }
 
+    /**
+     * @brief Initialise the Bloom Filter and set number of hash functions, k
+     *
+     * @tparam T
+     * @param numHashFunctions
+     */
     template <typename T>
     void SimpleBloomFilter<T>::init(size_t numHashFunctions)
     {
@@ -31,6 +48,12 @@ namespace pds::bloomFilter
         _visualiser.logState(*this, std::nullopt, VisualContext::INIT);
     }
 
+    /**
+     * @brief Insert an item into the Bloom Filter
+     *
+     * @tparam T
+     * @param item
+     */
     template <typename T>
     void SimpleBloomFilter<T>::insert(const T& item)
     {
@@ -48,8 +71,15 @@ namespace pds::bloomFilter
         }
     }
 
+    /**
+     * @brief Query if an item is possibly in the Bloom Filter
+     *
+     * @tparam T 
+     * @param item 
+     * @return std::optional<float>
+     */
     template <typename T>
-    bool SimpleBloomFilter<T>::query(const T& item) const
+    std::optional<float> SimpleBloomFilter<T>::query(const T& item) const
     {
         for (const auto& hashFunc : _hashFunctions)
         {
@@ -58,26 +88,49 @@ namespace pds::bloomFilter
             {
                 _visualiser.logAction("\033[31m[Query Miss]\033[0m " + item + " at index " + std::to_string(idx));
                 _visualiser.logState(*this, idx, VisualContext::QUERY);
-                return false;
+                return std::nullopt;
             }
         }
+
         _visualiser.logAction("\033[32m[Query Hit]\033[0m " + item);
         _visualiser.logState(*this, std::nullopt, VisualContext::QUERY);
-        return true;
+
+        const auto falsePositiveProbability = computeFalsePositiveProbability();
+        return std::make_optional<float>(falsePositiveProbability);
     }
 
+    /**
+     * @brief Gets the load factor of the Bloom Filter as a percentage
+     * which represents the ratio of set bits to total bits
+     *
+     * @tparam T 
+     * @return int32_t 
+     */
     template <typename T>
     int32_t SimpleBloomFilter<T>::getLoadFactor() const
     {
         return (_count * 100) / BIT_ARRAY_SIZE;
     }
 
+    /**
+     * @brief Total number of set bits in the Bloom Filter
+     *
+     * @tparam T 
+     * @return int32_t 
+     */
     template <typename T>
     int32_t SimpleBloomFilter<T>::getSize() const
     {
         return (_count);
     }
 
+    /**
+     * @brief Checks if the Bloom Filter is empty
+     *
+     * @tparam T 
+     * @return true 
+     * @return false 
+     */
     template <typename T>
     bool SimpleBloomFilter<T>::isEmpty() const
     {
