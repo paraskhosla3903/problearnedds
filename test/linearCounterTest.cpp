@@ -1,7 +1,7 @@
 #include "pds/linearCounter/linearCounter.h"
 #include <string>
 
-using namespace pds::bloomFilter;
+using namespace pds::cardinality;
 
 int main()
 {

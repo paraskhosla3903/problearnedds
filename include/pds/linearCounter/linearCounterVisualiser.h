@@ -7,15 +7,6 @@
 
 namespace pds::cardinality
 {
-
-    enum class VisualContext : uint8_t
-    {
-        INIT,
-        INSERT,
-        QUERY,
-        UNKNOWN
-    };
-
     template <typename T>
     class LinearCounter;
 
@@ -30,14 +21,14 @@ namespace pds::cardinality
 
         void logState(const LinearCounter<T>& counter,
                       std::optional<size_t> highlight = std::nullopt,
-                      VisualContext ctx = VisualContext::UNKNOWN) const
+                      pds::VisualContext ctx = pds::VisualContext::UNKNOWN) const
         {
             std::cout << "\n[Bit Array State] Context: ";
             switch (ctx)
             {
-                case VisualContext::INIT: std::cout << "INIT"; break;
-                case VisualContext::INSERT: std::cout << "INSERT"; break;
-                case VisualContext::QUERY: std::cout << "QUERY"; break;
+                case pds::VisualContext::INIT: std::cout << "INIT"; break;
+                case pds::VisualContext::INSERT: std::cout << "INSERT"; break;
+                case pds::VisualContext::QUERY: std::cout << "QUERY"; break;
                 default: std::cout << "UNKNOWN";
             }
             std::cout << "\n\n";

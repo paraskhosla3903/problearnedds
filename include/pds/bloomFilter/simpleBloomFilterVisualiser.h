@@ -7,15 +7,8 @@
 
 #include "pds/core/common.h"
 
-namespace pds::bloomFilter {
-
-    enum class VisualContext : uint8_t
-    {
-        INIT,
-        INSERT,
-        QUERY,
-        UNKNOWN
-    };
+namespace pds::bloomFilter
+{
 
     template <typename T>
     class SimpleBloomFilter; // Forward declaration
@@ -33,12 +26,12 @@ namespace pds::bloomFilter {
          */
         void logState(const SimpleBloomFilter<T>& table,
                       std::optional<size_t> highlight = std::nullopt,
-                      VisualContext ctx = VisualContext::UNKNOWN) const
+                      pds::VisualContext ctx = pds::VisualContext::UNKNOWN) const
         {
             constexpr size_t rowSize = 32;
             std::cout << "\nBit Array State:\n\n";
 
-            if(ctx == VisualContext::QUERY)
+            if(ctx == pds::VisualContext::QUERY)
             {
                 std::cout << "\033[1;33m"; // Yellow text for QUERY context
                 std::cout << "FP Probability: "
@@ -55,8 +48,8 @@ namespace pds::bloomFilter {
 
                 if (highlight.has_value() && highlight.value() == i)
                 {
-                    if (ctx == VisualContext::INSERT) std::cout << "\033[44m"; // Blue background
-                    else if (ctx == VisualContext::QUERY) std::cout << "\033[43m"; // Yellow background
+                    if (ctx == pds::VisualContext::INSERT) std::cout << "\033[44m"; // Blue background
+                    else if (ctx == pds::VisualContext::QUERY) std::cout << "\033[43m"; // Yellow background
                     else std::cout << "\033[47m"; // White/gray
                 }
                 else

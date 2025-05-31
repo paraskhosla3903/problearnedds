@@ -9,15 +9,6 @@
 
 namespace pds::hashTable
 {
-
-    enum class VisualContext : uint8_t {
-        INIT,
-        INSERT,
-        QUERY,
-        ERASE,
-        UNKNOWN
-    };
-
     template <typename Key, typename Value>
     class OpenAddressingHashTable; // Forward declaration
 
@@ -34,7 +25,7 @@ namespace pds::hashTable
          */
         void log(const OpenAddressingHashTable<Key, Value>& table,
              std::optional<size_t> highlight = std::nullopt,
-             VisualContext ctx = VisualContext::UNKNOWN) const
+             pds::VisualContext ctx = pds::VisualContext::UNKNOWN) const
         {
             constexpr size_t rowSize = 32;
             std::cout << "\nBit Array State:\n\n";
@@ -44,8 +35,8 @@ namespace pds::hashTable
 
                 if (highlight.has_value() && highlight.value() == i)
                 {
-                    if (ctx == VisualContext::INSERT) std::cout << "\033[44m"; // Blue background
-                    else if (ctx == VisualContext::QUERY) std::cout << "\033[43m"; // Yellow background
+                    if (ctx == pds::VisualContext::INSERT) std::cout << "\033[44m"; // Blue background
+                    else if (ctx == pds::VisualContext::QUERY) std::cout << "\033[43m"; // Yellow background
                     else std::cout << "\033[47m"; // Default white
                 }
                 else

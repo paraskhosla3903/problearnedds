@@ -10,27 +10,6 @@
 
 namespace pds::bloomFilter
 {
-    enum class VisualContext : uint8_t
-    {
-        INIT,
-        INSERT,
-        QUERY,
-        ERASE,
-        UNKNOWN
-    };
-
-    inline std::string toString(VisualContext ctx)
-    {
-        switch (ctx)
-        {
-            case VisualContext::INIT: return "INIT";
-            case VisualContext::INSERT: return "INSERT";
-            case VisualContext::QUERY: return "QUERY";
-            case VisualContext::ERASE: return "ERASE";
-            default: return "UNKNOWN";
-        }
-    }
-
     template <typename T>
     class CountingBloomFilter; // Forward declaration
 
@@ -45,7 +24,7 @@ namespace pds::bloomFilter
 
         void logState(const CountingBloomFilter<T>& table,
                       std::optional<size_t> highlight = std::nullopt,
-                      VisualContext ctx = VisualContext::UNKNOWN) const
+                      pds::VisualContext ctx = pds::VisualContext::UNKNOWN) const
         {
             constexpr size_t rowSize = 32;
             std::cout << "\n[Counting Bloom Filter State] Context: " << toString(ctx) << "\n\n";
@@ -65,9 +44,9 @@ namespace pds::bloomFilter
                 {
                     switch (ctx)
                     {
-                        case VisualContext::INSERT: std::cout << "\033[44m"; break; // Blue
-                        case VisualContext::QUERY:  std::cout << "\033[43m"; break; // Yellow
-                        case VisualContext::ERASE:  std::cout << "\033[41m"; break; // Red
+                        case pds::VisualContext::INSERT: std::cout << "\033[44m"; break; // Blue
+                        case pds::VisualContext::QUERY:  std::cout << "\033[43m"; break; // Yellow
+                        case pds::VisualContext::ERASE:  std::cout << "\033[41m"; break; // Red
                         default:                    std::cout << "\033[47m"; break; // White
                     }
                 }
