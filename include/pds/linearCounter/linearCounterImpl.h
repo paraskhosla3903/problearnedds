@@ -1,6 +1,6 @@
 #pragma once
 
-namespace pds::bloomFilter
+namespace pds::cardinality
 {
     template <typename T>
     LinearCounter<T>::LinearCounter()

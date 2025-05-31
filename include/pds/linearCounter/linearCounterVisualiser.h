@@ -5,7 +5,8 @@
 #include <optional>
 #include "pds/core/common.h"
 
-namespace pds::bloomFilter {
+namespace pds::cardinality
+{
 
     enum class VisualContext : uint8_t
     {

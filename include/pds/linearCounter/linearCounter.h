@@ -9,7 +9,7 @@
 #include "pds/core/common.h"
 #include "linearCounterVisualiser.h"
 
-namespace pds::bloomFilter
+namespace pds::cardinality
 {
     template <typename T>
     class LinearCounter
