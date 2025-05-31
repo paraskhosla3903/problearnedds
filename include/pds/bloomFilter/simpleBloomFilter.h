@@ -7,6 +7,7 @@
 #include <iomanip>
 #include <string>
 #include <iostream>
+#include <unordered_set>
 
 #include "pds/core/common.h"
 #include "simpleBloomFilterVisualiser.h"
@@ -39,6 +40,7 @@ namespace pds::bloomFilter
         std::vector<std::function<size_t(const T&)>> _hashFunctions;
 
         SimpleBloomFilterVisualiser<T> _visualiser;
+        std::unordered_set<T> _items; // To track inserted items
 
         private:
 

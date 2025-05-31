@@ -66,6 +66,8 @@ namespace pds::bloomFilter
                 _bitArray->set(idx);
             }
 
+            _items.insert(item); // Track inserted items
+
             _visualiser.logAction("[Insert] " + item + " -> Hash index: " + std::to_string(idx));
             _visualiser.logState(*this, idx, VisualContext::INSERT);
         }
@@ -92,7 +94,15 @@ namespace pds::bloomFilter
             }
         }
 
-        _visualiser.logAction("\033[32m[Query Hit]\033[0m " + item);
+        if(_items.find(item) == _items.end())
+        {
+            _visualiser.logAction("\033[33m[Query False Positive]\033[0m " + item);
+        }
+        else
+        {
+            _visualiser.logAction("\033[34m[Query Hit]\033[0m " + item);
+        }
+
         _visualiser.logState(*this, std::nullopt, VisualContext::QUERY);
 
         const auto falsePositiveProbability = computeFalsePositiveProbability();
