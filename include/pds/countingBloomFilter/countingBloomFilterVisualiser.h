@@ -92,6 +92,23 @@ namespace pds::bloomFilter
             }
 
             std::cout << "\n";
+
+            // add printing of the items in the set _items in the form of a table with column header items
+            std::cout << "Items in the Counting Bloom Filter:\n";
+            if (table._items.empty())
+            {
+                std::cout << "  No items inserted.\n";
+            }
+            else
+            {
+                std::cout << "  " << std::setw(20) << "Item" << "\n";
+                std::cout << "  " << std::string(20, '-') << "\n";
+                for (const auto& item : table._items)
+                {
+                    std::cout << "  " << std::setw(20) << item << "\n";
+                }
+            }
+            std::cout << '\n';
         }
     };
 }

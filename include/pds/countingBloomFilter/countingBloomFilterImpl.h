@@ -83,18 +83,12 @@ namespace pds::bloomFilter
 
         _visualiser.logState(*this, std::nullopt, VisualContext::QUERY);
 
-        return computeFalsePositiveProbability();
+        return std::make_optional<float>(computeFalsePositiveProbability());
     }
 
     template <typename T>
     void CountingBloomFilter<T>::erase(const T& item)
     {
-        if (_items.find(item) == _items.end())
-        {
-            _visualiser.logAction("\033[31m[Erase Miss]\033[0m " + item);
-            return;
-        }
-
         for (const auto& hashFunc : _hashFunctions)
         {
             size_t idx = hashFunc(item) % BIT_ARRAY_SIZE;
@@ -104,12 +98,15 @@ namespace pds::bloomFilter
                 if ((*_counterArray)[idx] == 0)
                 {
                     _bitArray->reset(idx);
+                    --_count;
                 }
             }
         }
 
-        _items.erase(item);
-        --_count;
+        if(_items.find(item) != _items.end())
+        {
+            _items.erase(item);
+        }
         _visualiser.logAction("\033[32m[Erase]\033[0m " + item);
         _visualiser.logState(*this, std::nullopt, VisualContext::ERASE);
     }
