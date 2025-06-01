@@ -26,13 +26,13 @@ These data structures are designed for **space-efficient approximate membership 
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/pds.git
-cd pds
+git clone https://github.com/paraskhosla3903/problearnedds.git
+cd problearnedds
 ```
 
 ### 2. Set the include path while compiling
 
-Create a usage `test.cpp` file using the available definitions and classes under **ProbDS**, and from the root compile using the following flags.
+Create a usage `test.cpp` file using the available definitions and classes under **ProbDS**, and if at the project root compile using the following flags, otherwise set the path to include the library correctly.
 
 ```bash
 clang++ -Iinclude --std=c++17 test.cpp
